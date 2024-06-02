@@ -1,0 +1,19 @@
+services:
+  museumof_db:
+    image: postgres:16.3
+    ports:
+      - 54321:5432
+    environment:
+      POSTGRES_USER: museumof
+      POSTGRES_PASSWORD: test1234
+    volumes:
+      - museumof_db_data:/var/lib/postgresql/data
+    networks:
+      - museumof_net
+
+networks:
+  museumof_net:
+    driver: bridge
+
+volumes:
+  museumof_db_data:

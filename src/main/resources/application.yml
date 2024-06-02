@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: museumof-server
+  profiles:
+    default: prod
