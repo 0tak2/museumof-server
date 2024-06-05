@@ -1,8 +1,9 @@
 rootProject.name = "museumof-server"
 
 include (
-    ":museumof-web-api",
-    ":storage:museumof-db"
+    "museumof-web-api",
+    "museumof-domain",
+    "storage:museumof-db"
 )
 
 pluginManagement {

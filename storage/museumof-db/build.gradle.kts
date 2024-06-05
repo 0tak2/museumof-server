@@ -5,7 +5,8 @@ allOpen {
 }
 
 dependencies {
-    api("org.springframework.boot:spring-boot-starter-data-jpa")
+    compileOnly(project(":museumof-domain"))
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-database-postgresql")
     runtimeOnly("org.postgresql:postgresql")
