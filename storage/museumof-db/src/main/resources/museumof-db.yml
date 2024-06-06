@@ -1,0 +1,81 @@
+spring:
+  jpa:
+    hibernate:
+      hbm2ddl:
+        auto: validate
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+
+---
+spring.config.activate.on-profile: dev
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:54321/museumof
+    username: museumof
+    password: test1234
+    hikari:
+      auto-commit: false
+      connection-test-query: SELECT 1
+      minimum-idle: 10
+      maximum-pool-size: 20
+      pool-name: pool-museumof
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+---
+spring.config.activate.on-profile: test
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+  h2:
+    console:
+      enabled: true
+    hikari:
+      auto-commit: false
+      connection-test-query: SELECT 1
+      minimum-idle: 10
+      maximum-pool-size: 20
+      pool-name: pool-museumof
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: create
+    database: H2
+    database-platform: org.hibernate.dialect.H2Dialect
+
+---
+spring.config.activate.on-profile: prod
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    hikari:
+      auto-commit: false
+      connection-test-query: SELECT 1
+      minimum-idle: 10
+      maximum-pool-size: 50
+      pool-name: pool-museumof
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: validate
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

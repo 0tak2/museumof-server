@@ -2,4 +2,6 @@ spring:
   application:
     name: museumof-server
   profiles:
-    default: prod
+    active: prod
+  config:
+    import: museumof-db.yml
