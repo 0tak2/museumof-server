@@ -8,7 +8,7 @@ tasks.getByName("jar") {
 
 dependencies {
     implementation(project(":museumof-domain"))
-    runtimeOnly(project(":storage:museumof-db"))
+    compileOnly(project(":storage:museumof-db"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
 }
