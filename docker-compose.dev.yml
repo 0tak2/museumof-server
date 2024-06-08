@@ -1,5 +1,5 @@
 services:
-  museumof_db:
+  museumof_main_db:
     image: postgres:16.3
     ports:
       - 54321:5432
@@ -8,7 +8,20 @@ services:
       POSTGRES_PASSWORD: test1234
     restart: always
     volumes:
-      - museumof_db_data:/var/lib/postgresql/data
+      - museumof_main_db_data:/var/lib/postgresql/data
+    networks:
+      - museumof_net
+
+  museumof_keycloak_db:
+    image: postgres:16.3
+    ports:
+      - 54322:5432
+    environment:
+      POSTGRES_USER: museumof_keycloak
+      POSTGRES_PASSWORD: test1234
+    restart: always
+    volumes:
+      - museumof_keycloak_db_data:/var/lib/postgresql/data
     networks:
       - museumof_net
 
@@ -20,9 +33,9 @@ services:
       - KEYCLOAK_ADMIN=museumof
       - KEYCLOAK_ADMIN_PASSWORD=test1234
     depends_on:
-      - museumof_db
+      - museumof_keycloak_db
     restart: always
-    command: start-dev --db=postgres --features=token-exchange --db-url=jdbc:postgresql://museumof_db:5432/museumof --db-username=museumof --db-password=test1234 --hostname=localhost
+    command: start-dev --db=postgres --features=token-exchange --db-url=jdbc:postgresql://museumof_keycloak_db:5432/museumof_keycloak --db-username=museumof_keycloak --db-password=test1234 --hostname=localhost
     networks:
       - museumof_net
 
@@ -31,4 +44,5 @@ networks:
     driver: bridge
 
 volumes:
-  museumof_db_data:
+  museumof_main_db_data:
+  museumof_keycloak_db_data:
