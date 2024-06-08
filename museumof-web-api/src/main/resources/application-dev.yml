@@ -1,2 +1,19 @@
 server:
   port: 8080
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          default-keycloak-client:
+            provider: museumof-keycloak-dev
+            client-id: museumof-dev
+            client-secret: 8Jk6FCa7g7t2ucGEVnWnHqlaSqdFCfg6
+            authorization-grant-type: authorization_code
+            scope: openid,profile
+        provider:
+          museumof-keycloak-dev:
+            issuer-uri: http://localhost:8081/realms/museumof
+logging:
+  level:
+    root: info
