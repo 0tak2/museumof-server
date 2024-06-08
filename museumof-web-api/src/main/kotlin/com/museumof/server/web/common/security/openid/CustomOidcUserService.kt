@@ -20,19 +20,29 @@ class CustomOidcUserService(
     override fun loadUser(userRequest: OidcUserRequest?): OidcUser {
         val oidcUser: OidcUser = super.loadUser(userRequest)
         val userInfo: OidcUserInfo = oidcUser.userInfo
-        log.info("OidcUser: {}", userInfo)
+        log.debug("OidcUser: {}", userInfo)
 
-        val userFromDb: User? = getUserBySubUsecase.getUserBySub(userInfo.subject)
+        var userFromDb: User? = getUserBySubUsecase.getUserBySub(userInfo.subject)
         userFromDb ?: run {
             log.info("first login. try to register. OidcUser: {}", oidcUser)
-            registerUserUsecase.registerUser(RegisterUserCommand(
-                username = userInfo.preferredUsername,
-                name = userInfo.fullName,
-                email = userInfo.email,
-                oidcSub = userInfo.subject
-            ))
+            userFromDb = registerUserUsecase.registerUser(
+                RegisterUserCommand(
+                    username = userInfo.preferredUsername,
+                    name = userInfo.fullName,
+                    email = userInfo.email,
+                    oidcSub = userInfo.subject
+                )
+            )
         }
 
-        return oidcUser
+        return ExtendedOidcUser.extendOf(
+            oidcUser,
+            domainUserId = userFromDb?.id!!,
+            domainFullName = userFromDb?.name!!,
+            oidcSub = userFromDb?.oidcSub!!,
+            domainCreatedAt = userFromDb?.createdAt!!,
+            domainUpdatedAt = userFromDb?.updatedAt,
+            domainActive = userFromDb?.active!!
+        )
     }
 }
