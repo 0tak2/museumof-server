@@ -11,6 +11,9 @@ spring:
 spring.config.activate.on-profile: dev
 
 spring:
+  flyway:
+    enabled: false
+    baseline-on-migrate: false
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:54321/museumof
@@ -26,12 +29,14 @@ spring:
     properties:
       hibernate:
         hbm2ddl:
-          auto: update
+          auto: create
         format_sql: true
         show_sql: true
         use_sql_comments: true
     database: POSTGRESQL
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create
 
 ---
 spring.config.activate.on-profile: test
