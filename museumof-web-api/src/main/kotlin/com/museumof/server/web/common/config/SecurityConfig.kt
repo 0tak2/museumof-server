@@ -26,6 +26,7 @@ class SecurityConfig(
                 authorizeHttpRequests {
                     authorize(anyRequest, authenticated)
                 }
+                csrf { disable() }
             }
             return http.build()
         }
@@ -39,6 +40,7 @@ class SecurityConfig(
                     oidcUserService = customOidcUserService()
                 }
             }
+            csrf { disable() }
         }
 
         return http.build()
