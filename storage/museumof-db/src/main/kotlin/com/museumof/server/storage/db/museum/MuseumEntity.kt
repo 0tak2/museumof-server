@@ -13,7 +13,7 @@ class MuseumEntity(
     @Column
     var museumName: String? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     var owner: UserEntity? = null,
 
