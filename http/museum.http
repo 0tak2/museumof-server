@@ -1,0 +1,9 @@
+POST http://localhost:8080/v1/museums
+Content-Type: application/json
+Cookie: JSESSIONID={{jsessionid}}
+
+{
+  "name": "테스트 뮤지엄",
+  "description": "안녕하세요",
+  "isHidden": false
+}
