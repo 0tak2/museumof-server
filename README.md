@@ -1,5 +1,7 @@
 # 뮤지엄오브 서버
 
+![프로젝트 상태](https://img.shields.io/badge/status-developing-red)
+
 <div style="text-align: center;">
     <img src="./docs/assets/museum-of1.svg">
 </div>
